@@ -50,6 +50,10 @@ python utils/prepare_SMID
 
 ## Usage
 
+### Checkpoint
+
+You can download our trained models from the [baidu pan (提取码：m9ub)](https://pan.baidu.com/s/1_sXYEQypI_W4OXn-I1zqkA) and put them into `./pretrain`.
+
 ### Training
 
 The training on indoor subset of SDSD:
