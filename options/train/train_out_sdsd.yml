@@ -1,0 +1,81 @@
+#### general settings
+name: FastLLVE_SDSD_out
+use_tb_logger: true
+model: video_base     # distortion: sr; scale: 1
+distortion: llve
+gpu_ids: [0]
+
+#### datasets
+datasets:
+  train:
+    name: outdoor_train
+    mode: video_SDSD
+    interval_list: [1]
+    random_reverse: false
+    border_mode: false
+    dataroot_GT: /path-to-train-dataset/GT
+    dataroot_LQ: /path-to-train-dataset/input
+    train_size: [960, 512]
+    cache_keys: ~
+    cache_data: true
+
+    N_frames: 7     # how many frames as a input.
+    use_shuffle: true
+    n_workers: 4  # per GPU
+    batch_size: 8
+    GT_size: 256     # size you want to crop out as input sample.
+    LQ_size: 256
+    use_flip: true
+    use_rot: true
+    color: RGB
+  val:
+    name: outdoor_val
+    mode: video_SDSD_test
+    dataroot_GT: /path-to-test-dataset/GT
+    dataroot_LQ: /path-to-test-dataset/input
+    cache_data: true
+    N_frames: 7
+    if_mod: 0
+    train_size: [960, 512]
+
+#### network structures
+network_G:
+  which_model_G: IALUT_LLVE
+  input_resolution: [960, 512]
+  if_train: true
+  n_ranks: 3
+  n_vertices_4d: 33
+  n_base_feats: 8
+  smooth_factor: 0
+  monotonicity_factor: 10
+
+#### path
+path:
+  root: ./
+  ## pretrain_model_G: experiments/
+  ## resume_state: experiments/
+  strict_load: false
+
+#### training settings: learning rate scheme, loss
+train:
+  lr_G: !!float 4e-4 #optimizer
+  lr_scheme: CosineAnnealingLR_Restart #schedulers
+  beta1: 0.9 #optimizer
+  beta2: 0.99 #optimizer
+  niter: 600000
+  sparse_factor: 0.0001
+  warmup_iter: -1  # -1: no warm up
+  T_period: [ 50000, 100000, 150000, 150000, 150000 ] #schedulers
+  restarts: [ 50000, 150000, 300000, 450000 ] #schedulers
+  restart_weights: [ 1, 1, 1, 1 ] #schedulers
+  eta_min: !!float 1e-7 #schedulers
+
+  pixel_criterion: Charbonnier
+  val_freq: !!float 5e3
+
+  # manual_seed: 100
+
+#### logger
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 5000

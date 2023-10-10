@@ -1,0 +1,31 @@
+name: FastLLVE_SMID_test
+model: video_base
+distortion: llve
+gpu_ids: [0]
+
+datasets:
+  test:
+    name: test
+    mode: video_SMID_test
+    dataroot_GT: /path-to-test-dataset/GT
+    dataroot_LQ: /path-to-test-dataset/input
+    train_size: [960, 512]
+    cache_data: true
+    N_frames: 7
+    if_mod: 0
+
+#### network structures
+network_G:
+  which_model_G: IALUT_LLVE
+  input_resolution: [960, 512]
+  if_train: false
+  n_ranks: 3
+  n_vertices_4d: 33
+  n_base_feats: 8
+  smooth_factor: 0
+  monotonicity_factor: 10
+
+#### path
+path:
+  root: ./
+  pretrain_model_G: pretrain/FastLLVE_smid.pth
