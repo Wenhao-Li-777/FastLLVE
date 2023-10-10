@@ -1,0 +1,9 @@
+numpy==1.24.2
+opencv_python==4.7.0.72
+Pillow==9.4.0
+PyYAML==6.0
+scipy==1.9.1
+setuptools==65.6.3
+tensorboardX==2.6.2.2
+torch==1.8.1+cu111
+torchvision==0.9.1+cu111
