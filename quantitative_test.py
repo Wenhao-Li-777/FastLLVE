@@ -6,26 +6,26 @@ import time
 import argparse
 
 import torch.nn as nn
-import options.option as opt
+import options.option as option
 import utils.util as util
 from data import create_dataset, create_dataloader
 from models import create_model
 
 #### options
 parser = argparse.ArgumentParser()
-parser.add_argument('-conf', type=str, required=True, help='Path to options YMAL file.')
-conf = opt.parse(parser.parse_args().conf, is_train=False)
-conf = opt.dict_to_nonedict(conf)
+parser.add_argument('-opt', type=str, required=True, help='Path to options YMAL file.')
+opt = option.parse(parser.parse_args().opt, is_train=False)
+opt = option.dict_to_nonedict(opt)
 
 
 def main():
-    model = create_model(conf)
+    model = create_model(opt)
 
     print('mkdir finish')
 
-    for phase, dataset_conf in conf['datasets'].items():
-        val_set = create_dataset(dataset_conf)
-        val_loader = create_dataloader(val_set, dataset_conf, conf, None)
+    for phase, dataset_opt in opt['datasets'].items():
+        val_set = create_dataset(dataset_opt)
+        val_loader = create_dataloader(val_set, dataset_opt, opt, None)
 
         pbar = util.ProgressBar(len(val_loader))
         psnr_rlt = {}
@@ -63,7 +63,7 @@ def main():
             pbar.update('Test {}'.format(folder))
 
         for k, v in psnr_rlt.items():
-            if conf['datasets']['if_mod'] == 0:
+            if opt['datasets']['if_mod'] == 0:
                 if '_5' in k:
                     psnr_rlt_all.append(v[5])
                     psnr_rlt_all.append(v[6])
@@ -75,7 +75,7 @@ def main():
                     psnr_rlt_all.append(frame_psnr)
 
         for k, v in ssim_rlt.items():
-            if conf['datasets']['if_mod'] == 0:
+            if opt['datasets']['if_mod'] == 0:
                 if '_5' in k:
                     ssim_rlt_all.append(v[5])
                     ssim_rlt_all.append(v[6])

@@ -301,27 +301,3 @@ def parse_options(root_path):
     with open(root_path, mode='r') as f:
         opt = yaml.load(f, Loader=ordered_yaml()[0])
     return opt
-
-def setup_logger(logger_name='base',
-                 logger_file='log.log',
-                 level=logging.INFO,
-                 screen=False,
-                 tofile=False):
-    '''set up logger'''
-    lg = logging.getLogger(logger_name)
-    formatter = logging.Formatter(
-        '%(asctime)s - %(levelname)s: %(message)s',
-        datefmt='%y-%m-%d %H:%M:%S')
-    lg.setLevel(level)
-    if tofile:
-        if os.path.exists(logger_file):
-            mode='a+'
-        else:
-            mode = 'w'
-        fh = logging.FileHandler(logger_file, mode=mode)
-        fh.setFormatter(formatter)
-        lg.addHandler(fh)
-    if screen:
-        sh = logging.StreamHandler()
-        sh.setFormatter(formatter)
-        lg.addHandler(sh)

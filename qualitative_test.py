@@ -5,7 +5,7 @@ import logging
 import time
 import argparse
 
-import options.option as opt
+import options.option as option
 import utils.util as util
 from data import create_dataset, create_dataloader
 from models import create_model
@@ -14,14 +14,14 @@ import os
 
 #### options
 parser = argparse.ArgumentParser()
-parser.add_argument('-conf', type=str, required=True, help='Path to options YMAL file.')
-conf = opt.parse(parser.parse_args().conf, is_train=False)
-conf = opt.dict_to_nonedict(conf)
+parser.add_argument('-opt', type=str, required=True, help='Path to options YMAL file.')
+opt = option.parse(parser.parse_args().opt, is_train=False)
+opt = option.dict_to_nonedict(opt)
 
 
 def main():
-    model = create_model(conf)
-    save_folder = './results/{}'.format(conf['name'])
+    model = create_model(opt)
+    save_folder = './results/{}'.format(opt['name'])
     output_folder = osp.join(save_folder, 'images/output')
     input_folder = osp.join(save_folder, 'images/input')
     GT_folder = osp.join(save_folder, 'images/GT')
@@ -32,9 +32,9 @@ def main():
 
     print('mkdir finish')
 
-    for phase, dataset_conf in conf['datasets'].items():
-        val_set = create_dataset(dataset_conf)
-        val_loader = create_dataloader(val_set, dataset_conf, conf, None)
+    for phase, dataset_opt in opt['datasets'].items():
+        val_set = create_dataset(dataset_opt)
+        val_loader = create_dataloader(val_set, dataset_opt, opt, None)
 
         pbar = util.ProgressBar(len(val_loader))
 
