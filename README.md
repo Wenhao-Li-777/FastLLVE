@@ -96,3 +96,15 @@ python qualitative_test.py -opt options/test/test_smid.yml
 ## License
 
 This codebase is released under the [Apache 2.0 license](LICENSE).
+
+## Citation
+
+If you find this repository useful, please kindly consider citing the following paper:
+```
+@InProceedings{li2023fastllve,
+  title={FastLLVE: Real-Time Low-Light Video Enhancement with Intensity-Aware Lookup Table},
+  author={Li, Wenhao and Wu, Guangyang and Wang, Wenyi and Ren, Peiran and Liu, Xiaohong},
+  booktitle={Proceedings of the 31th ACM International Conference on Multimedia},
+  year={2023}
+}
+```
