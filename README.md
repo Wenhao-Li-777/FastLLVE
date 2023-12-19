@@ -52,7 +52,7 @@ python utils/prepare_SMID
 
 ### Checkpoint
 
-You can download our trained models from the [baidu pan (提取码：m9ub)](https://pan.baidu.com/s/1_sXYEQypI_W4OXn-I1zqkA) and put them into `./pretrain`.
+You can download our trained models from the [baidu pan (提取码：m9ub)](https://pan.baidu.com/s/1_sXYEQypI_W4OXn-I1zqkA) or the [google drive](https://drive.google.com/drive/folders/1AGgjfo6zriGJkZYLLBT6j55F4vNkdjWO?usp=sharing), then put them into `./pretrain`.
 
 ### Training
 
